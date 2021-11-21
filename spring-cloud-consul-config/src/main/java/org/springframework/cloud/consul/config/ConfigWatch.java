@@ -49,6 +49,9 @@ public class ConfigWatch implements ApplicationEventPublisherAware, SmartLifecyc
 
 	private static final Log log = LogFactory.getLog(ConfigWatch.class);
 
+	/**
+	 * consul config 配置对应的实体类：spring.cloud.consul.config
+	 */
 	private final ConsulConfigProperties properties;
 
 	private final ConsulClient consul;
@@ -128,6 +131,8 @@ public class ConfigWatch implements ApplicationEventPublisherAware, SmartLifecyc
 	@Timed("consul.watch-config-keys")
 	public void watchConfigKeyValues() {
 		if (this.running.get()) {
+			// LinkedHashMap<String, Long> consulIndexes = "{cloud-lhs-provide/=197317,
+			// application/=197317}"
 			for (String context : this.consulIndexes.keySet()) {
 
 				// turn the context into a Consul folder path (unless our config format
